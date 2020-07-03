@@ -59,10 +59,7 @@ vector<T> Sqr(const vector<T>& v) {
 
 template <typename First, typename Second>
 pair<First, Second> Sqr(const pair<First, Second>& p) {
-    pair<First, Second> res;
-    res.first = Sqr(p.first);
-    res.second = Sqr(p.second);
-    return res;
+    return make_pair(Sqr(p.first), Sqr(p.second));
 }
 
 template <typename Key, typename Value>

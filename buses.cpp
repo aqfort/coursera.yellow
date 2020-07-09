@@ -1,3 +1,4 @@
+#include <unordered_map>
 #include <string>
 #include <iostream>
 #include <cassert>
@@ -60,31 +61,66 @@ istream& operator >> (istream& is, Query& q) {
 
 struct BusesForStopResponse {
     // РќР°РїРѕР»РЅРёС‚Рµ РїРѕР»СЏРјРё СЌС‚Сѓ СЃС‚СЂСѓРєС‚СѓСЂСѓ
-    vector<string> buses_for_stop;
+    vector<string> buses;
 };
 
 ostream& operator << (ostream& os, const BusesForStopResponse& r) {
     // Р РµР°Р»РёР·СѓР№С‚Рµ СЌС‚Сѓ С„СѓРЅРєС†РёСЋ
+    if(r.buses.empty()) {
+        os << "No stop";
+    } else {
+        for(const auto& bus : r.buses) {
+            os << bus << " ";
+        }
+    }
     return os;
 }
 
 struct StopsForBusResponse {
     // РќР°РїРѕР»РЅРёС‚Рµ РїРѕР»СЏРјРё СЌС‚Сѓ СЃС‚СЂСѓРєС‚СѓСЂСѓ
     string bus;
+    vector<string> stops;
     map<string, vector<string>> stops_with_interchanges;
 };
 
 ostream& operator << (ostream& os, const StopsForBusResponse& r) {
     // Р РµР°Р»РёР·СѓР№С‚Рµ СЌС‚Сѓ С„СѓРЅРєС†РёСЋ
+    if(r.bus.empty()) {
+        os << "No bus";
+    } else {
+        for(const auto& stop : r.stops) {
+            os << "Stop " << stop << ": ";
+            if(r.stops_with_interchanges.count(stop) == 0) {
+                os << "no interchange";
+            } else {
+                for(const auto& other_bus : r.stops_with_interchanges.at(stop)) {
+                    os << other_bus << " ";
+                }
+            }
+            os << endl;
+        }
+    }
     return os;
 }
 
 struct AllBusesResponse {
     // РќР°РїРѕР»РЅРёС‚Рµ РїРѕР»СЏРјРё СЌС‚Сѓ СЃС‚СЂСѓРєС‚СѓСЂСѓ
+    map<string, vector<string>> buses_to_stops;
 };
 
 ostream& operator << (ostream& os, const AllBusesResponse& r) {
     // Р РµР°Р»РёР·СѓР№С‚Рµ СЌС‚Сѓ С„СѓРЅРєС†РёСЋ
+    if(r.buses_to_stops.empty()) {
+        os << "No buses";
+    } else {
+        for(const auto& bus_item : r.buses_to_stops) {
+            os << "Bus " << bus_item.first << ": ";
+            for(const auto& stop : bus_item.second) {
+                os << stop << " ";
+            }
+            os << endl;
+        }
+    }
     return os;
 }
 
@@ -101,18 +137,43 @@ public:
     BusesForStopResponse GetBusesForStop(const string& stop) const {
         // Р РµР°Р»РёР·СѓР№С‚Рµ СЌС‚РѕС‚ РјРµС‚РѕРґ
         BusesForStopResponse result;
-        result.buses_for_stop.clear();
+        result.buses.clear();
         if(stops_to_buses.count(stop) != 0) {
-            result.buses_for_stop = stops_to_buses[stop];
+            result.buses = stops_to_buses.at(stop);
         }
+        return result;
     }
 
     StopsForBusResponse GetStopsForBus(const string& bus) const {
         // Р РµР°Р»РёР·СѓР№С‚Рµ СЌС‚РѕС‚ РјРµС‚РѕРґ
+        StopsForBusResponse result;
+        result.bus.clear();
+        result.stops.clear();
+        result.stops_with_interchanges.clear();
+        if(buses_to_stops.count(bus) != 0) {
+            result.bus = bus;
+            result.stops = buses_to_stops.at(bus);
+            for(const auto& stop : buses_to_stops.at(bus)) {
+                if(stops_to_buses.at(stop).size() != 1) {
+                    for(const auto& other_bus : stops_to_buses.at(stop)) {
+                        if(bus != other_bus) {
+                            result.stops_with_interchanges[stop].emplace_back(other_bus);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     AllBusesResponse GetAllBuses() const {
         // Р РµР°Р»РёР·СѓР№С‚Рµ СЌС‚РѕС‚ РјРµС‚РѕРґ
+        AllBusesResponse result;
+        result.buses_to_stops.clear();
+        if(!buses_to_stops.empty()) {
+            result.buses_to_stops = buses_to_stops;
+        }
+        return result;
     }
 
 private:

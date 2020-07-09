@@ -88,7 +88,12 @@ ostream& operator << (ostream& os, const StopsForBusResponse& r) {
     if(r.bus.empty()) {
         os << "No bus";
     } else {
+        bool first = true;
         for(const auto& stop : r.stops) {
+            if(!first) {
+                os << endl;
+            }
+            first = false;
             os << "Stop " << stop << ": ";
             if(r.stops_with_interchanges.count(stop) == 0) {
                 os << "no interchange";
@@ -97,7 +102,6 @@ ostream& operator << (ostream& os, const StopsForBusResponse& r) {
                     os << other_bus << " ";
                 }
             }
-            os << endl;
         }
     }
     return os;
@@ -113,12 +117,16 @@ ostream& operator << (ostream& os, const AllBusesResponse& r) {
     if(r.buses_to_stops.empty()) {
         os << "No buses";
     } else {
+        bool first = true;
         for(const auto& bus_item : r.buses_to_stops) {
+            if(!first) {
+                os << endl;
+            }
+            first = false;
             os << "Bus " << bus_item.first << ": ";
             for(const auto& stop : bus_item.second) {
                 os << stop << " ";
             }
-            os << endl;
         }
     }
     return os;

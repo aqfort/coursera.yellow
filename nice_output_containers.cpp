@@ -7,6 +7,10 @@
 
 using namespace std;
 
+
+
+
+
 template <typename First, typename Second>
 ostream& operator << (ostream& out, const pair<First, Second>& p);
 

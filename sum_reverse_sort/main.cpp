@@ -16,7 +16,7 @@ int main() {
 
     array = {5, 6, 4, 7, 3, 2, 9, 8, 0, 1};
 
-    cout << "a + b = " << Sum(a, b) << endl;
+    cout << '(' << a << ") + (" << b << ") = (" << Sum(a, b) << ')' << endl;
 
     cout << line << " -> " << Reverse(line) << endl;
 
@@ -32,6 +32,7 @@ int main() {
         for (size_t i = 0; i < array.size(); i++) {
         cout << ' ' << array.at(i);
     }
+    cout << endl;
 
     return 0;
 }

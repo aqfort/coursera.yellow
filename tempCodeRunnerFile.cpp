@@ -1,3 +1,13 @@
+enum class Gender {
+  FEMALE,
+  MALE
+};
 
-    // auto begin = s.begin();
-    // auto end = find_if(begin, s.end(), [] (const char& symbol) {return symbol == ' ';});
+struct Person {
+  int age;  // возраст
+  Gender gender;  // пол
+  bool is_employed;  // имеет ли работу
+};
+
+template <typename InputIt>
+int ComputeMedianAge(InputIt range_begin, InputIt range_end);

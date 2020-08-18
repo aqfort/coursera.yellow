@@ -13,7 +13,7 @@ public:
         Name(name),
         Profession(profession) {}
 
-    virtual void Walk(
+    void Walk(
         const string& destination
     ) const {
         Act();
@@ -25,7 +25,7 @@ public:
     // it's more logical because VisitPlaces can be used
     // only for people, so it should be a method of Person class
 
-    virtual void VisitPlaces(
+    void VisitPlaces(
         const vector<string>& places
     ) const {
         for (const auto& place : places) {
@@ -33,16 +33,16 @@ public:
         }
     }
 
-    virtual string GetName() const {
+    string GetName() const {
         return Name;
     }
 
-    virtual string GetProfession() const {
+    string GetProfession() const {
         return Profession;
     }
 
 protected:
-    virtual void Act() const {
+    void Act() const {
         cout << Profession << ": " << Name << " ";
     }
 
@@ -57,7 +57,7 @@ private:
 
 
 
-class Student : public Person {
+class Student : public Person { // virtual public
 public:
     Student(
         const string& name,
@@ -88,7 +88,7 @@ private:
 
 
 
-class Teacher : public Person {
+class Teacher : public Person { // virtual public
 public:
     Teacher(
         const string& name,
@@ -110,7 +110,7 @@ private:
 
 
 
-class Policeman : public Person {
+class Policeman : public Person { // virtual public
 public:
     Policeman(
         const string& name
@@ -153,8 +153,8 @@ int main() {
     Student s("Ann", "We will rock you");
     Policeman p("Bob");
 
-    // Person noname;
-    // noname.Walk("_%nowhere%_");
+    Person noname;
+    noname.Walk("_%nowhere%_");
 
     //VisitPlaces(t, {"Moscow", "London"});
     t.VisitPlaces({"Moscow", "London"});

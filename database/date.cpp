@@ -17,24 +17,22 @@ Date::Date(
         throw runtime_error("Day value is invalid: " + to_string(new_day));
     }
 
-    Year = new_year;
-    Month = new_month;
-    Day = new_day;
+    Year_ = new_year;
+    Month_ = new_month;
+    Day_ = new_day;
 }
 
 int Date::GetYear() const {
-    return Year;
+    return Year_;
 }
 
 int Date::GetMonth() const {
-    return Month;
+    return Month_;
 }
 
 int Date::GetDay() const {
-    return Day;
+    return Day_;
 }
-
-
 
 Date ParseDateFromString(const string &string_input) {
     istringstream string_stream(string_input);
@@ -81,8 +79,6 @@ ostream& operator<<(ostream& stream, const Date& date) {
         << setfill('0') << setw(2) << date.GetDay();
     return stream;
 }
-
-
 
 bool operator<(const Date& lhs, const Date& rhs) {
     return make_tuple(lhs.GetYear(), lhs.GetMonth(), lhs.GetDay()) < make_tuple(rhs.GetYear(), rhs.GetMonth(), rhs.GetDay());

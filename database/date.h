@@ -16,9 +16,9 @@ public:
     int GetDay() const;
 
 private:
-    int Year;
-    int Month;
-    int Day;
+    int Year_;
+    int Month_;
+    int Day_;
 };
 
 istream& operator>>(istream& stream, Date& date);

@@ -2,26 +2,31 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
+
+
 
 using namespace std;
 
+
+
 class Date {
 public:
-    Date(
-        const int& new_year,
-        const int& new_month,
-        const int& new_day);
+	Date(
+		const int& new_year,
+		const int& new_month,
+		const int& new_day);
 
-    int GetYear() const;
+	int GetYear() const;
 
-    int GetMonth() const;
+	int GetMonth() const;
 
-    int GetDay() const;
+	int GetDay() const;
 
 private:
-    int Year_;
-    int Month_;
-    int Day_;
+	int Year_;
+	int Month_;
+	int Day_;
 };
 
 istream& operator>>(istream& stream, Date& date);

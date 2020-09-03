@@ -2,17 +2,17 @@
 
 
 
+using namespace std;
+
+
+
 void Assert(bool b, const string& hint) {
 	AssertEqual(b, true, hint);
 }
 
-
-
 TestRunner::TestRunner() {
 	fail_count = 0;
 }
-
-
 
 TestRunner::~TestRunner() {
 	if (fail_count > 0) {

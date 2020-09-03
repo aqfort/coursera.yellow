@@ -28,14 +28,10 @@ ostream& operator << (ostream& out, const map<Key, Value>& m);
 template <typename T>
 ostream& operator << (ostream& out, const set<T>& s);
 
-
-
 template<class T, class U>
 void AssertEqual(const T& t, const U& u, const string& hint);
 
 void Assert(bool b, const string& hint);
-
-
 
 class TestRunner {
 public:
@@ -101,8 +97,6 @@ template <typename T>
 ostream& operator << (ostream& out, const set<T>& s) {
 	return out << '{' << Join(s, ", ") << '}';
 }
-
-
 
 template<class T, class U>
 void AssertEqual(const T& t, const U& u, const string& hint) {

@@ -7,7 +7,7 @@ using namespace std;
 template <typename Key, typename Value>
 Value& GetRefStrict(map<Key, Value>& MAP, const Key& KEY) {
     if(MAP.count(KEY) != 0) {
-        cout << "yiss" << endl;
+        cout << "yisss" << endl;
         return MAP.at(KEY);
     } else {
         throw runtime_error("friend");
